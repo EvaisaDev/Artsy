@@ -4,7 +4,7 @@ module.exports = {
   https: false, // Used only for the cookie, HTTPS itself should be configured in nginx
   domain: 'localhost',
   secret: 'SUPERSECRETKEY',
-  port: 80,
+  port: 3000,
   salt_length: 64,
 
   enable_restrictions: true, // Enable in-game restricted area/creation
