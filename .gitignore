@@ -1,8 +1,0 @@
-node_modules/
-backups/
-config.js
-ecosystem.json
-.htpasswd
-users.nedb
-banned.nedb
-restrictions.nedb
