@@ -1,7 +1,7 @@
-var port1 = process.env.PORT
+var port1 = process.env.PORT || 3000
 module.exports = {
   app_title: 'Ugandan Art Project',
-  database: 'mongodb://86.82.111.67/Database',
+  database: 'mongodb://Evaisa:30-10-1998@artsy-shard-00-00-wx8j3.mongodb.net:27017,artsy-shard-00-01-wx8j3.mongodb.net:27017,artsy-shard-00-02-wx8j3.mongodb.net:27017/test?ssl=true&replicaSet=Artsy-shard-0&authSource=admin',
   https: false, // Used only for the cookie, HTTPS itself should be configured in nginx
   domain: 'localhost',
   secret: 'SUPERSECRETKEY',
