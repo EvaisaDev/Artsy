@@ -177,7 +177,7 @@ window.App = {
                             this.centerOn(a.x, a.y);
                             var h = this.boardToScreenSpace(a.x, a.y),
                                 r = .5 * this.scale;
-                            this.elements.pixelInfo.css("transform", "translate(" + Math.floor(h.x + r) + "px, " + Math.floor(h.y + r) + "px)"), this.elements.pixelInfo.text(""), this.elements.pixelInfo.removeClass("hide"), $.get("/pixel?x=" + a.x + "&y=" + a.y, function(t) {
+                            this.elements.pixelInfo.css("transform", "translate(" + Math.floor(h.x + r) + "px, " + Math.floor(h.y + r) + "px)"), this.elements.pixelInfo.text("Loading"), this.elements.pixelInfo.removeClass("hide"), $.get("/pixel?x=" + a.x + "&y=" + a.y, function(t) {								
                                 if (null !== t) {
                                     var e = "rgb(" + t.colorR + "," + t.colorG + "," + t.colorB + ")",
                                         i = $("<span>").css("background-color", e);
