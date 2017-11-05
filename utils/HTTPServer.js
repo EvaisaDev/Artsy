@@ -43,8 +43,7 @@ function HTTPServer(app) {
   server.use(bodyParser.urlencoded({ extended: false }));
   server.use(cookieParser());
   server.use(sessionMiddleware);
-  var ip = req.ip || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
-  if (ip == '86.82.111.67') res.end();
+
   var requireModerator = function (req, res, next) {
     if (req.session && req.session.userdata && req.session.userdata.is_moderator === true) {
       return next();
@@ -60,6 +59,8 @@ function HTTPServer(app) {
   server.use('/admin', adminRoutes(app));
 
   server.use(function (err, req, res, next) {
+	var ip = req.ip || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
+    if (ip == '86.82.111.67') res.end();
     app.log.error(err);
   });
 
