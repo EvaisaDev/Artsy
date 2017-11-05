@@ -186,7 +186,9 @@ window.App = {
                                     }.bind(this));
                                     var s = moment(t.createdAt).format("DD/MM/YYYY hh:mm:ss a");
                                     this.elements.pixelInfo.text("Placed by " + t.username + " at " + s), i.prependTo(this.elements.pixelInfo)
-                                } 
+								} else {
+									this.elements.pixelInfo.text('Nothing has been placed here!');
+								}
                             }.bind(this))
                         }
                     } else this.elements.pixelInfo.addClass("hide")
