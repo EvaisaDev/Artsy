@@ -1,12 +1,8 @@
-# Place/Pixel Thing
-
-Based on https://github.com/xSke/Pxls
-
-Just messing around in node.js
+# Pixel drawing canvas
 
 Installation instructions:
 ## 1 - Clone it
-```git clone https://github.com/liamcottam/place```
+```git clone https://github.com/EvaisaGiac/Artsy.git```
 ## 2 - Install node.js libs
 ```npm install```
 ## 3 - Run it
