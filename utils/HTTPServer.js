@@ -44,6 +44,13 @@ function HTTPServer(app) {
   server.use(cookieParser());
   server.use(sessionMiddleware);
 
+  var requireModerator = function (req, res, next) {
+    if (req.session && req.session.userdata && req.session.userdata.is_moderator === true) {
+      return next();
+    }
+	return next();
+  };
+
   server.use('/js/mod_tools.js', requireModerator);
   server.use('/js/admin.js', requireModerator);
 
