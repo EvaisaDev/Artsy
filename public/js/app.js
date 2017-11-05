@@ -197,7 +197,7 @@ window.App = {
         //    t.preventDefault(), this.switchColor(null)
         //}.bind(this))
 		
-		$("#board").mousemove(s).mousemove(n);
+		$("#board").mousedown(s).mouseup(n);
 		$("#board").mousedown(si).mouseup(ni);
     },
     initCursor: function() {
