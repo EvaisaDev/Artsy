@@ -59,7 +59,6 @@ function HTTPServer(app) {
   server.use('/admin', adminRoutes(app));
 
   server.use(function (err, req, res, next) {
-    res.sendStatus(err.status || 500);
     app.log.error(err);
   });
 
