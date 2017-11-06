@@ -48,6 +48,7 @@ window.App = {
     cooldown: 0,
     color: null,
     init: function() {
+		var enableDraw=false;
         this.color = null, this.connectionLost = !1, this.showRestrictedAreas = !1, this.restrictedAreas = null, this.username = null, this.spectate_user = null, $(".board-container").hide(), $(".reticule").hide(), $(".ui").hide(), $(".message").hide(), $(".cursor").hide(), $(".cooldown-timer").hide(), this.elements.usersToggle.hide(), $.get("/boardinfo", this.initBoard.bind(this)), this.elements.pixelInfo.click(function() {
             this.elements.pixelInfo.addClass("hide")
         }.bind(this)), this.initBoardMovement(), this.initBoardPlacement(), this.initCursor(), this.initReticule(), this.initAlert(), this.initCoords(), this.initSidebar(), this.initMoveTicker(), this.initRestrictedAreas(), this.initContextMenu(), Notification.requestPermission()
@@ -99,6 +100,7 @@ window.App = {
             $(".color-picker").spectrum({
                 showPalette: !0,
                 showInput: !0,
+				allowEmpty:true,
                 preferredFormat: "hex",
                 localStorageKey: "kti.place",
                 change: function(t) {
@@ -114,7 +116,14 @@ window.App = {
         var t = function(t) {
             this.panX += t.dx / this.scale, this.panY += t.dy / this.scale, this.updateTransform()
         }.bind(this);
-        interact(this.elements.boardContainer[0]).styleCursor(!1), $(document).on("keydown", function(t) {
+        interact(this.elements.boardContainer[0]).draggable({
+            inertia: !1,
+            onmove: t
+        }).gesturable({
+            onmove: function(e) {
+                this.scale *= 1 + e.ds, this.updateTransform(), t(e)
+            }.bind(this)
+        }).styleCursor(!1), $(document).on("keydown", function(t) {
             "BODY" === t.target.nodeName && (87 === t.keyCode || 38 === t.keyCode ? this.panY = t.shiftKey ? this.panY += 1 : this.panY += 100 / this.scale : 83 === t.keyCode || 40 === t.keyCode ? this.panY = t.shiftKey ? this.panY -= 1 : this.panY -= 100 / this.scale : 65 === t.keyCode || 37 === t.keyCode ? this.panX = t.shiftKey ? this.panX += 1 : this.panX += 100 / this.scale : 68 === t.keyCode || 39 === t.keyCode ? this.panX = t.shiftKey ? this.panX -= 1 : this.panX -= 100 / this.scale : 81 === t.keyCode || 34 === t.keyCode ? (this.scale /= 1.3, this.scale = Math.min(this.maxScale, Math.max(this.minScale, this.scale))) : 69 === t.keyCode || 33 === t.keyCode ? (this.scale *= 1.3, this.scale = Math.min(this.maxScale, Math.max(this.minScale, this.scale))) : 27 === t.keyCode && (this.switchColor(null), this.elements.pixelInfo.addClass("hide"), this.elements.reticule.hide(), this.elements.cursor.hide()), this.updateTransform())
         }.bind(this)), this.elements.boardContainer.on("wheel", function(t) {
             this.elements.pixelInfo.addClass("hide");
@@ -126,58 +135,24 @@ window.App = {
         }.bind(this))
     },
     initBoardPlacement: function() {
-        var t, e, i = !1,
+         var t, e, i = !1,
             s = function(s) {
                 t = s.clientX, e = s.clientY, i = !1
             },
             n = function(s) {
                 null !== this.spectate_user && (this.spectate_user = null, this.alert(null));
                 var n = Math.abs(t - s.clientX),
-                    o = Math.abs(e - s.clientY);	
-				var that = this;
+                    o = Math.abs(e - s.clientY);
                 if (!i)
-					
                     if (i = !0, n < 5 && o < 5 && 1 === s.which) {
-	
-						var a = that.screenToBoardSpace(s.clientX, s.clientY);
-                        if (null !== this.color) this.place(a.x, a.y);
+                        var a = this.screenToBoardSpace(s.clientX, s.clientY);
+                        if (null !== this.color && this.cooldown <= 0) this.elements.pixelInfo.addClass("hide"), this.place(a.x, a.y);
                         else if (null === this.color) {
                             if (window.ModTools && window.ModTools.selectionModeEnabled) return;
                             this.centerOn(a.x, a.y);
                             var h = this.boardToScreenSpace(a.x, a.y),
                                 r = .5 * this.scale;
-                            this.elements.pixelInfo.css("transform", "translate(" + Math.floor(h.x + r) + "px, " + Math.floor(h.y + r) + "px)"), this.elements.pixelInfo.text(""), this.elements.pixelInfo.removeClass("hide"), $.get("/pixel?x=" + a.x + "&y=" + a.y, function(t) {
-                                if (null !== t) {
-                                    var e = "rgb(" + t.colorR + "," + t.colorG + "," + t.colorB + ")",
-                                        i = $("<span>").css("background-color", e);
-                                    i.click(function() {
-                                        this.switchColor(rgb2hex(e))
-                                    }.bind(this));
-                                } 
-                            }.bind(this))
-                        }
-                    } 
-            }.bind(this);
-            si = function(s) {
-                t = s.clientX, e = s.clientY, i = !1
-            },
-            ni = function(s) {
-                null !== this.spectate_user && (this.spectate_user = null, this.alert(null));
-                var n = Math.abs(t - s.clientX),
-                    o = Math.abs(e - s.clientY);	
-				var that = this;
-                if (!i)
-					
-                    if (i = !0, n < 5 && o < 5 && 1 === s.which) {
-	
-						var a = that.screenToBoardSpace(s.clientX, s.clientY);
-                        if (null !== this.color) this.elements.pixelInfo.addClass("hide"), this.place(a.x, a.y);
-                        else if (null === this.color) {
-                            if (window.ModTools && window.ModTools.selectionModeEnabled) return;
-                            this.centerOn(a.x, a.y);
-                            var h = this.boardToScreenSpace(a.x, a.y),
-                                r = .5 * this.scale;
-                            this.elements.pixelInfo.css("transform", "translate(" + Math.floor(h.x + r) + "px, " + Math.floor(h.y + r) + "px)"), this.elements.pixelInfo.text("Loading"), this.elements.pixelInfo.removeClass("hide"), $.get("/pixel?x=" + a.x + "&y=" + a.y, function(t) {								
+                            this.elements.pixelInfo.css("transform", "translate(" + Math.floor(h.x + r) + "px, " + Math.floor(h.y + r) + "px)"), this.elements.pixelInfo.text("Loading"), this.elements.pixelInfo.removeClass("hide"), $.get("/pixel?x=" + a.x + "&y=" + a.y, function(t) {
                                 if (null !== t) {
                                     var e = "rgb(" + t.colorR + "," + t.colorG + "," + t.colorB + ")",
                                         i = $("<span>").css("background-color", e);
@@ -186,19 +161,18 @@ window.App = {
                                     }.bind(this));
                                     var s = moment(t.createdAt).format("DD/MM/YYYY hh:mm:ss a");
                                     this.elements.pixelInfo.text("Placed by " + t.username + " at " + s), i.prependTo(this.elements.pixelInfo)
-								} else {
-									this.elements.pixelInfo.text('Nothing has been placed here!');
-								}
+                                } else this.elements.pixelInfo.text("Nothing has been placed here!")
                             }.bind(this))
                         }
                     } else this.elements.pixelInfo.addClass("hide")
-            }.bind(this);			
-        //this.elements.board.on("pointerdown", s).on("mousedown", s).on("pointerup", n).on("mouseup", n).contextmenu(function(t) {
-        //    t.preventDefault(), this.switchColor(null)
-        //}.bind(this))
-		
-		$("#board").mousedown(s).mouseup(n);
-		$("#board").mousedown(si).mouseup(ni);
+            }.bind(this);
+		if (enableDraw==true){
+			this.elements.board.on("pointerdown", s).on("mousedown", s).on("pointerup", n).on("mouseup", n).contextmenu(function(t) {
+				t.preventDefault(), this.switchColor(null)
+			}.bind(this))
+		}else{
+			this.alert("You must login to draw.");
+		}
     },
     initCursor: function() {
         var t = function(t) {
@@ -368,10 +342,11 @@ window.App = {
         })
     },
     onAuthentication: function(t) {
-        if (t.success) this.elements.loginToggle.text("Logout"), this.elements.loginContainer.hide(), this.elements.palette.removeClass("palette-sidebar"), this.username = t.username, t.is_moderator && !window.ModTools && $.get("js/mod_tools.js");
+        if (t.success) this.elements.loginToggle.text("Logout"), enableDraw=true, this.elements.loginContainer.hide(), this.elements.palette.removeClass("palette-sidebar"), this.username = t.username, t.is_moderator && !window.ModTools && $.get("js/mod_tools.js");
         else {
             if (null !== this.username) return location.reload();
             this.elements.loginToggle.text("Login"), this.elements.loginButton.prop("disabled", !1)
+			enableDraw=false
         }
     },
     initSidebar: function() {
