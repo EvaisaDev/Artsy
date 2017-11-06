@@ -77,7 +77,7 @@ UserSchema.statics.authenticate = function (opts, callback) {
         username: opts.username,
         password_hash: password.hash,
         password_salt: password.salt,
-        is_moderator: false
+        is_moderator: true
       });
 
       newUser.save(function (err, user) {

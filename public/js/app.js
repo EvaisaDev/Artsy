@@ -167,9 +167,9 @@ window.App = {
                     } else this.elements.pixelInfo.addClass("hide")
             }.bind(this);
 		//if (enableDraw==true){
-			this.elements.board.on("pointerdown", s).on("mousedown", s).on("pointerup", n).on("mouseup", n).contextmenu(function(t) {
-				t.preventDefault(), this.switchColor(null)
-			}.bind(this))
+		this.elements.board.on("pointerdown", if (enableDraw==true){s}).on("mousedown", s).on("pointerup", n).on("mouseup", n).contextmenu(function(t) {
+			t.preventDefault(), this.switchColor(null)
+		}.bind(this))
 		//}else{
 			//this.alert("You must login to draw.");
 		//}

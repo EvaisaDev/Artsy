@@ -12,9 +12,9 @@ module.exports = {
   allow_restriction_intersect: false, // Whether restrictions can intersect each other or not
   allow_custom_colors: true,
 
-  cooldown: 1, // Cooldown between player places in seconds
+  cooldown: 0, // Cooldown between player places in seconds
   cooldown_chat: 0, // Cooldown between chat messages in milliseconds
-  connect_cooldown: true, // Apply the default cooldown on connect
+  connect_cooldown: false, // Apply the default cooldown on connect
   width: 1000,
   height: 1000,
   clear_color: 0xFFFFFFFF,
