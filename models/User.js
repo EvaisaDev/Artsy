@@ -51,7 +51,7 @@ var UserSchema = new Schema({
   is_moderator: {
     type: Boolean,
     required: true
-  }
+  },
   is_registered: {
     type: Boolean,
     required: true
