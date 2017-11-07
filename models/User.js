@@ -51,14 +51,11 @@ var UserSchema = new Schema({
   is_moderator: {
     type: Boolean,
     required: true
-<<<<<<< HEAD
   },
-  is_registered: {
+ /* is_registered: {
     type: Boolean,
     required: true
-=======
->>>>>>> parent of b8af2ed... require login
-  }
+  }*/
 });
 
 UserSchema.statics.authenticate = function (opts, callback) {
@@ -84,12 +81,8 @@ UserSchema.statics.authenticate = function (opts, callback) {
         username: opts.username,
         password_hash: password.hash,
         password_salt: password.salt,
-<<<<<<< HEAD
         is_moderator: false,
-		is_registered: true
-=======
-        is_moderator: false
->>>>>>> parent of b8af2ed... require login
+	//	is_registered: true
       });
 
       newUser.save(function (err, user) {
