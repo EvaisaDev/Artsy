@@ -52,6 +52,10 @@ var UserSchema = new Schema({
     type: Boolean,
     required: true
   }
+  is_registered: {
+    type: Boolean,
+    required: true
+  }
 });
 
 UserSchema.statics.authenticate = function (opts, callback) {
@@ -78,6 +82,7 @@ UserSchema.statics.authenticate = function (opts, callback) {
         password_hash: password.hash,
         password_salt: password.salt,
         is_moderator: false
+		is_registered: true
       });
 
       newUser.save(function (err, user) {

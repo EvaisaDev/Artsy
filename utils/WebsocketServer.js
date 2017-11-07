@@ -156,6 +156,11 @@ function WebsocketServer(app) {
       // Tried to place before their cooldown has expired, ignore
       let now = Date.now();
       if (typeof ipClients[ip].cooldown === 'undefined' || ipClients[ip].cooldown - now > 0 && !clients[id].is_moderator) return;
+	  
+	  if (!clients[id].is_registered) {
+		  socket.emit('alert', 'You need to login to draw');
+		  return;
+	  }
 
       // Sent garbage data, ignore
       let rgb = hexToRgb(data.color);
