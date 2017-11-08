@@ -26,7 +26,6 @@ function Router(app) {
     if (!req.query.x || !req.query.y) return res.sendStatus(400);
 
     Pixel.findOne({ xPos: req.query.x, yPos: req.query.y }, { _id: 0, __v: 0, ip: 0 }, function (err, pixel) {
-      if (err) return res.sendStatus(500);
 
       if (pixel) {
         if (pixel.anon) {

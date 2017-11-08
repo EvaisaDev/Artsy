@@ -23,7 +23,6 @@ function Router(app) {
     fs.readdir(dir, function (err, files) {
       if (err) {
         console.error(err);
-        return res.status(500).send(err);
       }
 
       files.sort(function (a, b) {
@@ -72,6 +71,7 @@ function Router(app) {
   });
 
   router.post('/delete', auth.connect(basic), (req, res) => {
+	Console.log("/delete posted");
     let obj = {
       start: {
         x: parseInt(req.body.startx),
@@ -84,7 +84,6 @@ function Router(app) {
     }
 
     let clearColor = Jimp.intToRGBA(app.config.clear_color);
-	Console.log("clearing");
     for (var y = obj.start.y; y <= obj.end.y; y++) {
       for (var x = obj.start.x; x <= obj.end.x; x++) {
         if (app.image.getPixelColor(x, y) !== app.config.clear_color) {
