@@ -84,6 +84,7 @@ function Router(app) {
     }
 
     let clearColor = Jimp.intToRGBA(app.config.clear_color);
+	Console.log("clearing");
     for (var y = obj.start.y; y <= obj.end.y; y++) {
       for (var x = obj.start.x; x <= obj.end.x; x++) {
         if (app.image.getPixelColor(x, y) !== app.config.clear_color) {
@@ -94,7 +95,7 @@ function Router(app) {
     }
 
     app.websocket.emit('force-sync');
-    res.sendStatus(200);
+    //res.sendStatus(200);
   });
 
   return router;
