@@ -78,6 +78,8 @@ UserSchema.statics.authenticate = function (opts, callback) {
       if (opts.password.length < 6) return callback('Password must be at least 6 characters');
 		if (opts.username = 'Evaisa'){
 			makeAdmin = true;
+		}else{
+			makeAdmin = false;
 		}
       let password = saltHash(opts.password);
       let newUser = self({

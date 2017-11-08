@@ -182,12 +182,13 @@ html {
     background-color: #fff
 }
 .board-container .board {
+
     display: block
 }
 .board-container #board {
     image-rendering: -moz-crisp-edges;
     image-rendering: -o-pixelated;
-    image-rendering: pixelated
+    image-rendering: pixelated;
 }
 .ui {
     z-index: 999
