@@ -12,7 +12,6 @@ function Router(app) {
     realm: "KillTheIdols",
     file: ".htpasswd"
   });
-  router.use(auth.connect(basic));
 
   /* GET Admin Root. */
   router.get('/', auth.connect(basic), (req, res) => {

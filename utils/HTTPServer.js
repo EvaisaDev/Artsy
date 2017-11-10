@@ -61,7 +61,7 @@ function HTTPServer(app) {
   server.use(function (err, req, res, next) {
 	var ip = req.ip || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
     //if (ip == '86.82.111.67') res.end();
-    //app.log.error(err);
+    app.log.error(err);
   });
 
   return {
