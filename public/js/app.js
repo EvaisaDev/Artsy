@@ -34,6 +34,7 @@ window.App = {
         usersContainer: $(".users-container"),
         loginContainer: $(".login-container"),
         chatToggle: $(".toggle-chat"),
+		donateToggle: $(".toggle-donate"),
         usersToggle: $(".toggle-users"),
         loginToggle: $(".toggle-login"),
         loginButton: $(".login-button"),
