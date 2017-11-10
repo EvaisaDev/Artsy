@@ -353,6 +353,8 @@ window.App = {
     initSidebar: function() {
         this.elements.chatToggle.click(function() {
             this.elements.chatContainer.toggle(), this.elements.usersContainer.hide(), this.elements.loginContainer.hide(), this.elements.chatToggle.text("Chat"), this.elements.palette.toggleClass("palette-sidebar", this.elements.chatContainer.is(":visible"))
+		}.bind(this)), this.elements.donateToggle.click(function() {
+			window.open("paypal.me/ZuluArt","_self")
         }.bind(this)), this.elements.usersToggle.click(function() {
             this.elements.chatContainer.hide(), this.elements.usersContainer.toggle(), this.elements.loginContainer.hide(), this.elements.palette.toggleClass("palette-sidebar", this.elements.usersContainer.is(":visible"))
         }.bind(this)), this.elements.loginToggle.click(function() {
