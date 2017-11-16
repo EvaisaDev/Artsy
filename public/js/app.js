@@ -159,9 +159,9 @@ window.App = {
                                 if (null !== t) {
                                     var e = "rgb(" + t.colorR + "," + t.colorG + "," + t.colorB + ")",
                                         i = $("<span>").css("background-color", e);
-                                    i.click(function() {
-                                        this.switchColor(rgb2hex(e))
-                                    }.bind(this));
+                                    //i.click(function() {
+                                    //    this.switchColor(rgb2hex(e))
+                                    //}.bind(this));
                                     var s = moment(t.createdAt).format("DD/MM/YYYY hh:mm:ss a");
                                     this.elements.pixelInfo.text("Placed by " + t.username + " at " + s), i.prependTo(this.elements.pixelInfo)
                                 } else this.elements.pixelInfo.text("Nothing has been placed here!")
