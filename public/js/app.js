@@ -50,13 +50,13 @@ window.App = {
     color: null,
     init: function() {
 		var enableDraw=false;
-		this.alert("Canvas has been frozen");
         this.color = null, this.connectionLost = !1, this.showRestrictedAreas = !1, this.restrictedAreas = null, this.username = null, this.spectate_user = null, $(".board-container").hide(), $(".reticule").hide(), $(".ui").hide(), $(".message").hide(), $(".cursor").hide(), $(".cooldown-timer").hide(), this.elements.usersToggle.hide(), $.get("/boardinfo", this.initBoard.bind(this)), this.elements.pixelInfo.click(function() {
             this.elements.pixelInfo.addClass("hide")
         }.bind(this)), this.initBoardMovement(), this.initBoardPlacement(), this.initCursor(), this.initReticule(), this.initAlert(), this.initCoords(), this.initSidebar(), this.initMoveTicker(), this.initRestrictedAreas(), this.initContextMenu(), Notification.requestPermission()
     },
     initBoard: function(t) {
         this.width = t.width, this.height = t.height, /*this.palette = t.palette,*/ this.custom_colors = t.custom_colors, /*this.initPalette(),*/ this.elements.board.attr("width", this.width).attr("height", this.height), this.updateTransform();
+		this.alert("Canvas has been frozen");
         var e = getQueryVariable("x") || this.width / 2,
             i = getQueryVariable("y") || this.height / 2;
         (e < 0 || e >= this.width) && (e = this.width / 2), (i < 0 || i >= this.height) && (e = this.height / 2), this.centerOn(e, i), this.scale = getQueryVariable("scale") || this.scale, this.updateTransform(), this.initSocket(), this.drawBoard()
