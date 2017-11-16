@@ -50,6 +50,7 @@ window.App = {
     color: null,
     init: function() {
 		var enableDraw=false;
+		this.alert("Canvas has been frozen");
         this.color = null, this.connectionLost = !1, this.showRestrictedAreas = !1, this.restrictedAreas = null, this.username = null, this.spectate_user = null, $(".board-container").hide(), $(".reticule").hide(), $(".ui").hide(), $(".message").hide(), $(".cursor").hide(), $(".cooldown-timer").hide(), this.elements.usersToggle.hide(), $.get("/boardinfo", this.initBoard.bind(this)), this.elements.pixelInfo.click(function() {
             this.elements.pixelInfo.addClass("hide")
         }.bind(this)), this.initBoardMovement(), this.initBoardPlacement(), this.initCursor(), this.initReticule(), this.initAlert(), this.initCoords(), this.initSidebar(), this.initMoveTicker(), this.initRestrictedAreas(), this.initContextMenu(), Notification.requestPermission()
