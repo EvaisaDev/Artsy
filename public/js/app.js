@@ -56,17 +56,18 @@ window.App = {
     },
     initBoard: function(t) {
         this.width = t.width, this.height = t.height, /*this.palette = t.palette,*/ this.custom_colors = t.custom_colors, /*this.initPalette(),*/ this.elements.board.attr("width", this.width).attr("height", this.height), this.updateTransform();
-		this.alert("Canvas has been frozen");
         var e = getQueryVariable("x") || this.width / 2,
             i = getQueryVariable("y") || this.height / 2;
         (e < 0 || e >= this.width) && (e = this.width / 2), (i < 0 || i >= this.height) && (e = this.height / 2), this.centerOn(e, i), this.scale = getQueryVariable("scale") || this.scale, this.updateTransform(), this.initSocket(), this.drawBoard()
     },
     drawBoard: function() {
+		
         this.image = new Image, this.image.onload = function() {
             this.connectionLost && this.alert(null), this.elements.board[0].getContext("2d").drawImage(this.image, 0, 0, this.width, this.height)
         }.bind(this), this.image.onerror = function() {
             this.alert("Refreshing board..."), setTimeout(this.drawBoard.bind(this), 1e3)
-        }.bind(this), this.image.src = "/boarddata?d=" + Date.now()
+        }.bind(this), this.image.src = "/boarddata?d=" + Date.now();
+		this.alert("Canvas has been frozen");
     },
     initRestrictedAreas: function() {
         this.elements.restrictedToggle.click(this.restrictedAreaToggle.bind(this))
@@ -203,6 +204,7 @@ window.App = {
         }.bind(this))
     },
     initSocket: function() {
+		this.alert("Canvas has been frozen");
         var t = 0;
         this.socket = io(), this.socket.on("connect", function() {
             $(".board-container").show(), $(".ui").show(), $(".loading").fadeOut(500), this.elements.alert.fadeOut(200), this.connectionLost && this.drawBoard()
