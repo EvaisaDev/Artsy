@@ -20,7 +20,7 @@ function rgb2hex(t) {
 window.App = {
     elements: {
         board: $("#board"),
-        //palette: $(".palette"),
+        palette: $(".palette"),
         boardMover: $(".board-mover"),
         boardZoomer: $(".board-zoomer"),
         boardContainer: $(".board-container"),
@@ -55,7 +55,7 @@ window.App = {
         }.bind(this)), this.initBoardMovement(), this.initBoardPlacement(), this.initCursor(), this.initReticule(), this.initAlert(), this.initCoords(), this.initSidebar(), this.initMoveTicker(), this.initRestrictedAreas(), this.initContextMenu(), Notification.requestPermission()
     },
     initBoard: function(t) {
-        this.width = t.width, this.height = t.height, /*this.palette = t.palette,*/ this.custom_colors = t.custom_colors, this.initPalette(), this.elements.board.attr("width", this.width).attr("height", this.height), this.updateTransform();
+        this.width = t.width, this.height = t.height, /*this.palette = t.palette,*/ this.custom_colors = t.custom_colors, /*this.initPalette()*/, this.elements.board.attr("width", this.width).attr("height", this.height), this.updateTransform();
         var e = getQueryVariable("x") || this.width / 2,
             i = getQueryVariable("y") || this.height / 2;
         (e < 0 || e >= this.width) && (e = this.width / 2), (i < 0 || i >= this.height) && (e = this.height / 2), this.centerOn(e, i), this.scale = getQueryVariable("scale") || this.scale, this.updateTransform(), this.initSocket(), this.drawBoard()
@@ -91,7 +91,7 @@ window.App = {
             }.bind(this))
         }.bind(this))
     },
-   /* initPalette: function() {
+    initPalette: function() {
         if (this.palette.forEach(function(t, e) {
                 $("<div>").addClass("palette-color").css("background-color", t).click(function() {
                     0 === this.cooldown ? this.switchColor(t) : this.switchColor(null)
@@ -112,7 +112,7 @@ window.App = {
                 }
             })
         }
-    },*/
+    },
     initBoardMovement: function() {
         var t = function(t) {
             this.panX += t.dx / this.scale, this.panY += t.dy / this.scale, this.updateTransform()
