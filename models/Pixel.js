@@ -12,6 +12,14 @@ var colorPieceValidator = function (c) {
 }
 
 var PixelSchema = new Schema({
+  createdAt: {
+    type: Number,
+    required: true,
+    validate: {
+      validator: Number.isInteger,
+      message: '{VALUE} is not an integer value'
+    }
+  },
   xPos: {
     type: Number,
     required: true,
@@ -50,14 +58,6 @@ var PixelSchema = new Schema({
     validate: {
       validator: colorPieceValidator,
       message: '{VALUE} is not a valid color'
-    }
-  },
-  createdAt: {
-    type: Number,
-    required: true,
-    validate: {
-      validator: Number.isInteger,
-      message: '{VALUE} is not an integer value'
     }
   },
   username: {

@@ -55,7 +55,7 @@ window.App = {
         }.bind(this)), this.initBoardMovement(), this.initBoardPlacement(), this.initCursor(), this.initReticule(), this.initAlert(), this.initCoords(), this.initSidebar(), this.initMoveTicker(), this.initRestrictedAreas(), this.initContextMenu(), Notification.requestPermission()
     },
     initBoard: function(t) {
-        this.width = t.width, this.height = t.height, this.palette = t.palette, this.custom_colors = t.custom_colors, /*this.initPalette(),*/ this.elements.board.attr("width", this.width).attr("height", this.height), this.updateTransform();
+        this.width = t.width, this.height = t.height, this.palette = t.palette, this.custom_colors = t.custom_colors, this.initPalette(), this.elements.board.attr("width", this.width).attr("height", this.height), this.updateTransform();
         var e = getQueryVariable("x") || this.width / 2,
             i = getQueryVariable("y") || this.height / 2;
         (e < 0 || e >= this.width) && (e = this.width / 2), (i < 0 || i >= this.height) && (e = this.height / 2), this.centerOn(e, i), this.scale = getQueryVariable("scale") || this.scale, this.updateTransform(), this.initSocket(), this.drawBoard()

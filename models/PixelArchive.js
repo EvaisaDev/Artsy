@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 var PixelSchema = new Schema({
+  createdAt: {
+    type: Number,
+    required: true
+  },
   xPos: {
     type: Number,
     required: true
@@ -19,10 +23,6 @@ var PixelSchema = new Schema({
     required: true
   },
   colorB: {
-    type: Number,
-    required: true
-  },
-  createdAt: {
     type: Number,
     required: true
   },
