@@ -116,6 +116,19 @@ window.App = {
         }
     },
     initBoardMovement: function() {
+		var enableGesture = false;
+		$('body').keydown(function(e){
+		if(e.keyCode == 32){
+			enableGesture = true;
+		}
+		});
+		$('body').keyup(function(e){
+		if(e.keyCode == 32){
+			enableGesture = false;
+		}
+		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+			enableGesture = true;
+		}
         var t = function(t) {
             this.panX += t.dx / this.scale, this.panY += t.dy / this.scale, this.updateTransform()
         }.bind(this);
@@ -149,18 +162,7 @@ window.App = {
             this.panX -= i / e, this.panX += i / this.scale, this.panY -= s / e, this.panY += s / this.scale, this.updateTransform()
         }.bind(this))			
 		}
-		$('body').keydown(function(e){
-		if(e.keyCode == 32){
-			enableGesture = true;
-		}
-		});
-		$('body').keyup(function(e){
-		if(e.keyCode == 32){
-			enableGesture = false;
-		}
-		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-			enableGesture = true;
-		}
+
 		});
     },
     initBoardPlacement: function() {
