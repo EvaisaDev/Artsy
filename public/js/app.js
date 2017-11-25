@@ -50,6 +50,7 @@ window.App = {
     color: null,
     init: function() {
 		var enableDraw=false;
+		var enableGesture=false;
         this.color = null, this.connectionLost = !1, this.showRestrictedAreas = !1, this.restrictedAreas = null, this.username = null, this.spectate_user = null, $(".board-container").hide(), $(".reticule").hide(), $(".ui").hide(), $(".message").hide(), $(".cursor").hide(), $(".cooldown-timer").hide(), this.elements.usersToggle.hide(), $.get("/boardinfo", this.initBoard.bind(this)), this.elements.pixelInfo.click(function() {
             this.elements.pixelInfo.addClass("hide")
         }.bind(this)), this.initBoardMovement(), this.initBoardPlacement(), this.initCursor(), this.initReticule(), this.initAlert(), this.initCoords(), this.initSidebar(), this.initMoveTicker(), this.initRestrictedAreas(), this.initContextMenu(), Notification.requestPermission()
@@ -67,7 +68,6 @@ window.App = {
         }.bind(this), this.image.onerror = function() {
             this.alert("Refreshing board..."), setTimeout(this.drawBoard.bind(this), 1e3)
         }.bind(this), this.image.src = "/boarddata?d=" + Date.now();
-		this.alert("Canvas has been frozen");
     },
     initRestrictedAreas: function() {
         this.elements.restrictedToggle.click(this.restrictedAreaToggle.bind(this))
@@ -119,6 +119,7 @@ window.App = {
         var t = function(t) {
             this.panX += t.dx / this.scale, this.panY += t.dy / this.scale, this.updateTransform()
         }.bind(this);
+		if (enableGesture==true){
         interact(this.elements.boardContainer[0]).draggable({
             inertia: !1,
             onmove: t
@@ -136,6 +137,31 @@ window.App = {
                 s = t.clientY - this.elements.boardContainer.height() / 2;
             this.panX -= i / e, this.panX += i / this.scale, this.panY -= s / e, this.panY += s / this.scale, this.updateTransform()
         }.bind(this))
+		}else{
+        interact(this.elements.boardContainer[0]).styleCursor(!1), $(document).on("keydown", function(t) {
+            "BODY" === t.target.nodeName && (87 === t.keyCode || 38 === t.keyCode ? this.panY = t.shiftKey ? this.panY += 1 : this.panY += 100 / this.scale : 83 === t.keyCode || 40 === t.keyCode ? this.panY = t.shiftKey ? this.panY -= 1 : this.panY -= 100 / this.scale : 65 === t.keyCode || 37 === t.keyCode ? this.panX = t.shiftKey ? this.panX += 1 : this.panX += 100 / this.scale : 68 === t.keyCode || 39 === t.keyCode ? this.panX = t.shiftKey ? this.panX -= 1 : this.panX -= 100 / this.scale : 81 === t.keyCode || 34 === t.keyCode ? (this.scale /= 1.3, this.scale = Math.min(this.maxScale, Math.max(this.minScale, this.scale))) : 69 === t.keyCode || 33 === t.keyCode ? (this.scale *= 1.3, this.scale = Math.min(this.maxScale, Math.max(this.minScale, this.scale))) : 27 === t.keyCode && (this.switchColor(null), this.elements.pixelInfo.addClass("hide"), this.elements.reticule.hide(), this.elements.cursor.hide()), this.updateTransform())
+        }.bind(this)), this.elements.boardContainer.on("wheel", function(t) {
+            this.elements.pixelInfo.addClass("hide");
+            var e = this.scale;
+            t.originalEvent.deltaY > 0 ? this.scale /= 1.3 : this.scale *= 1.3, this.scale = Math.min(this.maxScale, Math.max(this.minScale, this.scale));
+            var i = t.clientX - this.elements.boardContainer.width() / 2,
+                s = t.clientY - this.elements.boardContainer.height() / 2;
+            this.panX -= i / e, this.panX += i / this.scale, this.panY -= s / e, this.panY += s / this.scale, this.updateTransform()
+        }.bind(this))			
+		}
+		$('body').keydown(function(e){
+		if(e.keyCode == 32){
+			enableGesture = true;
+		}
+		});
+		$('body').keyup(function(e){
+		if(e.keyCode == 32){
+			enableGesture = false;
+		}
+		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+			enableGesture = true;
+		}
+		});
     },
     initBoardPlacement: function() {
          var t, e, i = !1,
