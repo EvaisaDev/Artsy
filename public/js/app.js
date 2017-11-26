@@ -116,7 +116,7 @@ window.App = {
         }
     },
     initBoardMovement: function() {
-		var enableGesture = false;
+		
 		$('body').keydown(function(e){
 		if(e.keyCode == 32){
 			enableGesture = true;
@@ -128,6 +128,8 @@ window.App = {
 		}
 		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 			enableGesture = true;
+		}else {
+			var enableGesture = false;	
 		}
         var t = function(t) {
             this.panX += t.dx / this.scale, this.panY += t.dy / this.scale, this.updateTransform()
@@ -183,7 +185,7 @@ window.App = {
                             this.centerOn(a.x, a.y);
                             var h = this.boardToScreenSpace(a.x, a.y),
                                 r = .5 * this.scale;
-                            this.elements.pixelInfo.css("transform", "translate(" + Math.floor(h.x + r) + "px, " + Math.floor(h.y + r) + "px)"), this.elements.pixelInfo.text("Loading"), this.elements.pixelInfo.removeClass("hide"), $.get("/pixel?x=" + a.x + "&y=" + a.y, function(t) {
+                            /*this.elements.pixelInfo.css("transform", "translate(" + Math.floor(h.x + r) + "px, " + Math.floor(h.y + r) + "px)"), this.elements.pixelInfo.text("Loading"), this.elements.pixelInfo.removeClass("hide"), $.get("/pixel?x=" + a.x + "&y=" + a.y, function(t) {
                                 if (null !== t) {
                                     var e = "rgb(" + t.colorR + "," + t.colorG + "," + t.colorB + ")",
                                         i = $("<span>").css("background-color", e);
@@ -193,7 +195,7 @@ window.App = {
                                     var s = moment(t.createdAt).format("DD/MM/YYYY hh:mm:ss a");
                                     this.elements.pixelInfo.text("Placed by " + t.username + " at " + s), i.prependTo(this.elements.pixelInfo)
                                 } else this.elements.pixelInfo.text("Nothing has been placed here!")
-                            }.bind(this))
+                            }.bind(this))*/
                         }
                     } else this.elements.pixelInfo.addClass("hide")
             }.bind(this);
