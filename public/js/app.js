@@ -153,7 +153,7 @@ window.App = {
             this.panX -= i / e, this.panX += i / this.scale, this.panY -= s / e, this.panY += s / this.scale, this.updateTransform()
         }.bind(this))
 		}else{
-        interact(this.elements.boardContainer[0]).styleCursor(!1), $(document).on("keydown", function(t) {
+        $(document).on("keydown", function(t) {
             "BODY" === t.target.nodeName && (87 === t.keyCode || 38 === t.keyCode ? this.panY = t.shiftKey ? this.panY += 1 : this.panY += 100 / this.scale : 83 === t.keyCode || 40 === t.keyCode ? this.panY = t.shiftKey ? this.panY -= 1 : this.panY -= 100 / this.scale : 65 === t.keyCode || 37 === t.keyCode ? this.panX = t.shiftKey ? this.panX += 1 : this.panX += 100 / this.scale : 68 === t.keyCode || 39 === t.keyCode ? this.panX = t.shiftKey ? this.panX -= 1 : this.panX -= 100 / this.scale : 81 === t.keyCode || 34 === t.keyCode ? (this.scale /= 1.3, this.scale = Math.min(this.maxScale, Math.max(this.minScale, this.scale))) : 69 === t.keyCode || 33 === t.keyCode ? (this.scale *= 1.3, this.scale = Math.min(this.maxScale, Math.max(this.minScale, this.scale))) : 27 === t.keyCode && (this.switchColor(null), this.elements.pixelInfo.addClass("hide"), this.elements.reticule.hide(), this.elements.cursor.hide()), this.updateTransform())
         }.bind(this)), this.elements.boardContainer.on("wheel", function(t) {
             this.elements.pixelInfo.addClass("hide");
